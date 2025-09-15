@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incredible India - Travel Booking System</title>
+    <style>
+        :root {
+            --primary: #FF9933;
+            --secondary: #138808;
+            --accent: #000080;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: var(--dark);
+        }
+        
+        header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .hero {
+            height: 500px;
+            background: url('images/hero-bg.jpg') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-content {
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 1rem;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--accent);
+        }
+        
+        .destinations {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .destination-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .destination-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .card-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .destination-card:hover .card-img img {
+            transform: scale(1.1);
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card-content h3 {
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+        
+        .card-content p {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .price {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .booking-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 300px;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .footer-section p {
+            margin-bottom: 0.5rem;
+        }
+        
+        .social-links a {
+            color: white;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #444;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Incredible <span>India</span></div>
+            <ul class="nav-links">
+                <li><a href="#destinations">Destinations</a></li>
+                <li><a href="#booking">Book Now</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Discover the Beauty of India</h1>
+            <p>From the majestic Himalayas to the serene backwaters of Kerala, experience the diversity and richness of Indian culture and landscapes.</p>
+            <a href="#booking" class="btn">Book Your Trip Now</a>
+        </div>
+    </section>
+
+    <section id="destinations" class="container">
+        <h2 class="section-title">Popular Destinations</h2>
+        <div class="destinations">
+            <!-- Destination cards will be dynamically loaded here -->
+        </div>
+    </section>
+
+    <section id="booking" class="container">
+        <h2 class="section-title">Book Your Trip</h2>
+        <form id="bookingForm" class="booking-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="destination">Destination</label>
+                    <select id="destination" required>
+                        <option value="">Select a destination</option>
+                        <!-- Options will be dynamically loaded -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="package">Package Type</label>
+                    <select id="package" required>
+                        <option value="">Select package type</option>
+                        <option value="basic">Basic</option>
+                        <option value="standard">Standard</option>
+                        <option value="premium">Premium</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="checkIn">Check-in Date</label>
+                    <input type="date" id="checkIn" required>
+                </div>
+                <div class="form-group">
+                    <label for="checkOut">Check-out Date</label>
+                    <input type="date" id="checkOut" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="adults">Adults</label>
+                    <input type="number" id="adults" min="1" value="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="children">Children</label>
+                    <input type="number" id="children" min="0" value="0">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="message">Special Requests</label>
+                <textarea id="message" rows="4"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <button type="submit" class="btn">Complete Booking</button>
+            </div>
+        </form>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>Incredible India Travels is a premier travel agency specializing in curated experiences across India's most beautiful destinations.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p>Email: info@incredibleindiatravels.com</p>
+                <p>Phone: +91 98765 43210</p>
+                <p>Address: 123 Travel Street, New Delhi, India</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#">FB</a>
+                    <a href="#">IG</a>
+                    <a href="#">TW</a>
+                    <a href="#">YT</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2023 Incredible India Travels. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Sample destination data (in a real application, this would come from the backend)
+        const destinations = [
+            {
+                id: 1,
+                name: "Taj Mahal, Agra",
+                description: "One of the seven wonders of the world, this ivory-white marble mausoleum is a symbol of love.",
+                price: "₹5,000",
+                image: "images/taj-mahal.jpg"
+            },
+            {
+                id: 2,
+                name: "Varanasi Ghats",
+                description: "The spiritual capital of India, known for its sacred ghats along the Ganges River.",
+                price: "₹4,500",
+                image: "images/varanasi.jpg"
+            },
+            {
+                id: 3,
+                name: "Kerala Backwaters",
+                description: "A network of interconnected canals, rivers, lakes and inlets, forming a breathtaking waterways system.",
+                price: "₹7,200",
+                image: "images/kerala.jpg"
+            },
+            {
+                id: 4,
+                name: "Goa Beaches",
+                description: "Famous for its pristine beaches, Portuguese heritage, and vibrant nightlife.",
+                price: "₹6,800",
+                image: "images/goa.jpg"
+            },
+            {
+                id: 5,
+                name: "Jaipur, Rajasthan",
+                description: "The Pink City known for its stunning palaces, forts, and vibrant culture.",
+                price: "₹5,500",
+                image: "images/jaipur.jpg"
+            },
+            {
+                id: 6,
+                name: "Ladakh",
+                description: "A high-altitude desert with dramatic landscapes, Buddhist monasteries, and adventurous roads.",
+                price: "₹8,900",
+                image: "images/ladakh.jpg"
+            }
+        ];
+
+        // Load destinations into the page
+        document.addEventListener('DOMContentLoaded', function() {
+            const destinationsContainer = document.querySelector('.destinations');
+            const destinationSelect = document.getElementById('destination');
+            
+            // Add destinations to the grid
+            destinations.forEach(dest => {
+                // Create destination card
+                const card = document.createElement('div');
+                card.className = 'destination-card';
+                card.innerHTML = `
+                    <div class="card-img">
+                        <img src="${dest.image}" alt="${dest.name}">
+                    </div>
+                    <div class="card-content">
+                        <h3>${dest.name}</h3>
+                        <p>${dest.description}</p>
+                        <span class="price">From ${dest.price}</span>
+                        <button class="btn" data-id="${dest.id}">Book Now</button>
+                    </div>
+                `;
+                destinationsContainer.appendChild(card);
+                
+                // Add to select dropdown
+                const option = document.createElement('option');
+                option.value = dest.id;
+                option.textContent = dest.name;
+                destinationSelect.appendChild(option);
+            });
+            
+            // Add event listeners to "Book Now" buttons
+            document.querySelectorAll('.destination-card .btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const destId = this.getAttribute('data-id');
+                    destinationSelect.value = destId;
+                    document.getElementById('booking').scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Handle form submission
+            document.getElementById('bookingForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // In a real application, this would send data to the backend
+                alert('Booking request received! In a real application, this would be processed by our backend system.');
+                this.reset();
+            });
+            
+            // Set minimum dates for date inputs
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('checkIn').setAttribute('min', today);
+            document.getElementById('checkOut').setAttribute('min', today);
+        });
+    </script>
+</body>
+</html>
